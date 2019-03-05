@@ -1,29 +1,21 @@
-# vue-mall
+# vue-mall商城
 
-## Project setup
-```
+## 基于 Vue-CLI3.0 项目
+使用vue+vuex+veu-router开发的移动商城
+
+### 安装依赖
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+
+### 启动开发服务
 npm run serve
-```
 
-### Compiles and minifies for production
-```
+
+### 构建生产
 npm run build
-```
 
-### Run your tests
-```
-npm run test
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
