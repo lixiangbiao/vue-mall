@@ -22,6 +22,16 @@ Vue.use(Lazyload, {
 Vue.use(Vant);
 Vue.config.productionTip = false
 
+Vue.mixin({ 
+    created(){ 
+        var myOption = this.$data.show; 
+        if(myOption){
+            console.log('全局混入') 
+        }else{ 
+            console.log('没进入全局混入')
+        } 
+    } 
+})
 
 new Vue({
     router,

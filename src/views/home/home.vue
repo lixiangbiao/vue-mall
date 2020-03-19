@@ -7,38 +7,23 @@
         </van-swipe-item>
       </van-swipe>
     </div>
-    <div class="good-item">
+    <div class="good-item" v-for="(value,key) in goods" v-bind:key="key">
       <div class="goods-title">
-        <p>零食</p>
+        <p>{{key}}</p>
       </div>
       <div class="goods-list">
         <div class="goods-info">
           <div class="info">
-            <a>
-              <img
-                src="https://gw.alicdn.com/imgextra/i2/3243356429/O1CN017wZrDn1xMWo57Zqgf_!!0-item_pic.jpg_360x360xzQ75s100.jpg"
-              >
+            <a v-for="(item,index) in goods[key]" v-bind:key="index" @click="clickdetail(item.id)">
+              <img :src="item.img">
               <div class="img-bg">
               </div>
               <div class="info-detail">
-                <span>abd吐司面包营养早餐手撕面包夹心糕点蛋糕零食食品整箱面包年货</span>
+                <span>{{item.title}}</span>
                 <div class="info-pay">
-                  <span class="price">￥28.8</span>
-                  <span class="number">244付款</span>
-                  <i class="iconfont icon-gouwucheman"></i>
-                </div>
-              </div>
-            </a>
-            <a>
-              <img
-                src="https://gw.alicdn.com/imgextra/i3/880734502/O1CN01ILqG831j7xacztBnj_!!0-item_pic.jpg_360x360xzQ75s100.jpg"
-              >
-              <div class="info-detail">
-                <span>【三只松鼠_手撕面包1kg/整箱】网红早餐营养食品小零食蛋糕点心</span>
-                <div class="info-pay">
-                  <span class="price">￥67.8</span>
-                  <span class="number">293付款</span>
-                  <i class="iconfont icon-gouwucheman"></i>
+                  <span class="price">￥{{item.price}}</span>
+                  <span class="number">{{item.paynumber}}已付款</span>
+                  <i class="iconfont icon-gouwucheman" v-on:click.stop="clickcart(key,index)"></i>
                 </div>
               </div>
             </a>
@@ -46,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div class="good-item">
+    <!-- <div class="good-item">
       <div class="goods-title">
         <p>数码</p>
       </div>
@@ -85,49 +70,12 @@
         </div>
       </div>
     </div>
-    <div class="good-item">
-      <div class="goods-title">
-        <p>服饰</p>
-      </div>
-      <div class="goods-list">
-        <div class="goods-info">
-          <div class="info">
-            <a>
-              <img
-                src="https://gw.alicdn.com/imgextra/i3/1030765146/TB2sZ_xyb5YBuNjSspoXXbeNFXa_!!1030765146.jpg_360x360xzQ75s100.jpg"
-              >
-              <div class="img-bg">
-              </div>
-              <div class="info-detail">
-                <span>sunday seoul / 法式浪漫 镂空蕾丝小碎花梦幻网纱无袖背心连衣裙</span>
-                <div class="info-pay">
-                  <span class="price">￥138</span>
-                  <span class="number">251付款</span>
-                  <i class="iconfont icon-gouwucheman"></i>
-                </div>
-              </div>
-            </a>
-            <a>
-              <img
-                src="https://gw.alicdn.com/imgextra/i1/3010847728/O1CN01Vx0aZD26xTHmXCRW9_!!0-item_pic.jpg_360x360xzQ75s100.jpg"
-              >
-              <div class="info-detail">
-                <span>法式复古裙山本很仙的两件套套装蕾丝网纱连衣裙女装2019新款春装</span>
-                <div class="info-pay">
-                  <span class="price">￥98</span>
-                  <span class="number">2567</span>
-                  <i class="iconfont icon-gouwucheman"></i>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+-->
   </div>
 </template>
 
 <script>
+import {mapMutations} from 'vuex';
 export default {
   data() {
     return {
@@ -135,8 +83,77 @@ export default {
         "http://aecpm.alicdn.com/simba/img/TB15tIjGVXXXXcoapXXSutbFXXX.jpg",
         "https://gw.alicdn.com/imgextra/i4/99/O1CN0113v8ea1CbNiByK490_!!99-0-lubanu.jpg",
         "https://gw.alicdn.com/imgextra/i3/35/O1CN01V7GoxL1C84MYyL3xB_!!35-0-lubanu.jpg"
-      ]
+      ],
+      goods:{
+          '零食':[{
+              id:1000,
+              img:'https://gw.alicdn.com/imgextra/i2/3243356429/O1CN017wZrDn1xMWo57Zqgf_!!0-item_pic.jpg_360x360xzQ75s100.jpg',
+              title:'abd吐司面包营养早餐手撕面包夹心糕点蛋糕零食食品整箱面包年货',
+              price:28.8,
+              paynumber:244,
+              weight:0.213,
+          },{
+              id:1001,
+              img:'https://gw.alicdn.com/imgextra/i3/880734502/O1CN01ILqG831j7xacztBnj_!!0-item_pic.jpg_360x360xzQ75s100.jpg',
+              title:'【三只松鼠_手撕面包1kg/整箱】网红早餐营养食品小零食蛋糕点心',
+              price:67.8,
+              paynumber:293,
+              weight:0.372,
+          }],
+          '数码':[{
+              id:1002,
+              img:'https://gw.alicdn.com/imgextra/i4/1714128138/O1CN01DIYXWZ29zFgVemDpZ_!!0-item_pic.jpg_360x360xzQ75s100.jpg',
+              title:'【6+128G 2499元起】Xiaomi/小米小米8年度旗舰全面屏骁龙845指纹版智能拍照游戏手机旗舰官方',
+              price:2499,
+              paynumber:29334,
+              weight:null,
+          },{
+              id:1003,
+              img:'https://gw.alicdn.com/imgextra/i2/2838892713/O1CN01H04ZH71Vub1p3EzZX_!!0-item_pic.jpg_360x360xzQ75s100.jpg',
+              title:'【买赠蓝牙音箱 享6期免息】Huawei/华为 Mate 20 全面屏珍珠屏超大广角徕卡三镜头麒麟980人工智能芯片手机',
+              price:3999,
+              paynumber:17293,
+              weight:null,
+          }],
+          '服饰':[{
+              id:1004,
+              img:'https://gw.alicdn.com/imgextra/i3/1030765146/TB2sZ_xyb5YBuNjSspoXXbeNFXa_!!1030765146.jpg_360x360xzQ75s100.jpg',
+              title:'sunday seoul / 法式浪漫 镂空蕾丝小碎花梦幻网纱无袖背心连衣裙',
+              price:138,
+              paynumber:251,
+              weight:null,
+          },{
+              id:1005,
+              img:'https://gw.alicdn.com/imgextra/i1/3010847728/O1CN01Vx0aZD26xTHmXCRW9_!!0-item_pic.jpg_360x360xzQ75s100.jpg',
+              title:'法式复古裙山本很仙的两件套套装蕾丝网纱连衣裙女装2019新款春装',
+              price:98,
+              paynumber:2568,
+              weight:null,
+          }]
+      }
     };
+  },
+  beforeRouteEnter (to, from, next) {
+    // 在渲染该组件的对应路由被 confirm 前调用
+    // 不能获取组件实例 `this`
+    // 因为当钩子执行前，组件实例还没被创建
+    console.log(to)
+    next()
+  },
+  methods:{
+      ...mapMutations(['addcart']),
+      clickdetail(id){
+          //this.$route.query.id
+          //this.$router.push({path:'/goodsdetail',query:{id:id}})
+
+          //params传参，push里面只能是 name:'xxxx',不能是path:'/xxx'
+          //传参是this.$router,接收参数是this.$route
+          //this.$route.params.id
+          this.$router.push({ name:'详情', params: { id: id }})
+      },
+      clickcart(key,index){
+          this.addcart(this.goods[key][index]);
+      }
   }
 };
 </script>
@@ -211,15 +228,18 @@ export default {
                 display: flex;
                 align-items:center;
                 color: rgb(255, 80, 0);
+                flex: 1;
               }
               .number {
                 display: flex;
-                justify-content:center;
+                justify-content:flex-end;
                 align-items:center;
                 color: rgb(153, 153, 153);
+                flex: 2;
               }
               i{
                   width: 18px;
+                  margin-left: 4px;
               }
             }
           }

@@ -1,6 +1,49 @@
 <template>
   <div class="cart">
-    <div class="item-list">
+    <div class="item-list" v-for="(item,index) in cart" v-bind:key="index">
+      <div class="item-cb">
+        <div>
+            <div>
+                <van-checkbox v-model="item.checked" checked-color="#ff5212" @change="checkOnChange(item.id)"></van-checkbox>
+            </div>
+        </div>
+      </div>
+      <div class="item-detail">
+        <div>
+          <div class="item-img">
+            <a>
+              <img
+                v-bind:src="item.img"
+              >
+            </a>
+          </div>
+          <div class="item-info">
+            <p class="title">{{item.title}}</p>
+            <div class="ico-img">
+              <span>
+                <img src="https://img.alicdn.com/bao/uploaded/TB1ayLgDhjaK1RjSZFAwu2dLFXa.png">
+              </span>
+              <span>
+                <img src="https://gw.alicdn.com/tfs/TB10WFoJH9YBuNjy0FgXXcxcXXa-405-72.png">
+              </span>
+            </div>
+            <div class="item-logo-text">
+              <div class="item-logo-title">天猫超市 满149减15</div>
+            </div>
+            <div class="pay">
+                <div class="pay-price">
+                    <div class="price">{{item.price*cartobj[item.id]}}</div>
+                    <div class="weight">{{item.weight*cartobj[item.id]}}</div>
+                </div>
+                <div class="edit-quantity">
+                    <van-stepper v-model="cartobj[item.id]" @change="quanOnChange(item.id)"/>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="item-list">
       <div class="item-cb">
         <div>
             <div>
@@ -42,51 +85,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="item-list">
-      <div class="item-cb">
-        <div>
-            <div>
-                <van-checkbox v-model="checked" checked-color="#ff5212"></van-checkbox>
-            </div>
-        </div>
-      </div>
-      <div class="item-detail">
-        <div>
-          <div class="item-img">
-            <a>
-              <img
-                src="https://gw.alicdn.com/bao/uploaded/i2/725677994/O1CN01SkWUbm28vIeBjPwq4_!!0-item_pic.jpg_200x200q50s150.jpg_.webp"
-              >
-            </a>
-          </div>
-          <div class="item-info">
-            <p class="title">TC巧克力味爆浆软心曲奇饼干办公室休闲零食茶点纯手工零食品156g</p>
-            <div class="ico-img">
-              <span>
-                <img src="https://img.alicdn.com/bao/uploaded/TB1ayLgDhjaK1RjSZFAwu2dLFXa.png">
-              </span>
-              <span>
-                <img src="https://gw.alicdn.com/tfs/TB10WFoJH9YBuNjy0FgXXcxcXXa-405-72.png">
-              </span>
-            </div>
-            <div class="item-logo-text">
-              <div class="item-logo-title">天猫超市 满149减15</div>
-            </div>
-            <div class="pay">
-                <div class="pay-price">
-                    <div class="price">13.8</div>
-                    <div class="weight">0.213</div>
-                </div>
-                <div class="edit-quantity">
-                    <van-stepper v-model="value"/>
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="item-list">
+    </div> -->
+    <!-- <div class="item-list">
       <div class="item-cb">
         <div>
             <div>
@@ -119,7 +119,6 @@
             <div class="pay">
                 <div class="pay-price">
                     <div class="price">118</div>
-                    <!-- <div class="weight">0.213</div> -->
                 </div>
                 <div class="edit-quantity">
                     <van-stepper v-model="value"/>
@@ -128,11 +127,11 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="item-all">
         <div class="ft-cb">
-            <van-radio checked-color="#ff5212"></van-radio>
+            <van-checkbox v-model="checked" checked-color="#ff5212" @change="checkallOnChange"></van-checkbox>
         </div>
         <div class="qx">全选</div>
         <div class="pay">
@@ -149,14 +148,40 @@
 </template>
 
 <script>
+import {mapState,mapMutations} from 'vuex'
 export default {
   data() {
     return {
-      checked: true,
-      value: 1,
       price:0.00,
-      number:0
+      number:0,
+      checked:false
     };
+  },
+  computed:{
+      ...mapState({
+          cart:'cart',
+          cartobj:'cartobj'
+      })
+  },
+  methods:{
+      ...mapMutations(['cartnumber']),
+      quanOnChange(id){
+        //console.log(this.cartobj[id])
+        let params={
+            id:id,
+            value:this.cartobj[id]
+        }
+        this.cartnumber(params)
+      },
+      checkOnChange(id){
+          let params={
+            id:id,
+        }
+        console.log(params)
+      },
+      checkallOnChange(value){
+          console.log(value)
+      }
   }
 };
 </script>

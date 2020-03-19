@@ -37,7 +37,24 @@ const router = new Router({
             meta: {
                 title: '购物车'
             }
-        }, {
+        },
+        // {
+        //     path: '/goodsdetail', //this.$router.push({path:'/goodsdetail',query:{id:id}})
+        //     name: '购物车',
+        //     component: () => import('../views/cart/goodsdetail.vue'),
+        //     meta: {
+        //         title: '购物车'
+        //     }
+        // }, 
+        {
+            path: '/goodsdetail:id',
+            name: '详情',
+            component: () => import('../views/cart/goodsdetail.vue'),
+            meta: {
+                title: '详情'
+            }
+        }, 
+        {
             path: '/mine',
             name: '我的',
             component: () => import('../views/mine/mine.vue'),
